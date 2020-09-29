@@ -4,7 +4,8 @@ module.exports = (app) => {
 
   app.post(
     `/signup`,
-    require('./signup')
+    require('./signup'),
+    authToken.generate
   )
 
   app.post(

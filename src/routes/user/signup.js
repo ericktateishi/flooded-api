@@ -1,12 +1,13 @@
 const UserService = require('../../service/user')
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
   try {
     const response = await UserService.signup({
       ...req.body,
       active: true
     })
-    res.status(200).send(response)
+    req.user = response
+    next()
 
   } catch (error) {
     if (error && error.code === 11000) return res.sendStatus(406)

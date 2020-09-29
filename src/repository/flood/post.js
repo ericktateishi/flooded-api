@@ -6,5 +6,6 @@ const Flood = require('../../model/flood')
    * @param {*} flood
    */
 module.exports = async (flood) => {
-  return Flood.create(flood)
+  const result = await Flood.create(flood)
+  return result.populate('user').execPopulate()
 }

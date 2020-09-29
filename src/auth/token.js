@@ -5,9 +5,9 @@ exports.auth = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(req.header('Auth-User-Token'), process.env.APP_SECRET)
-    if (!decoded || !decoded.user) return res.sendStatus(401)
+    if (!decoded || !decoded.user || !decoded.user.id) return res.sendStatus(401)
 
-    req.user_id = decoded.user
+    req.user_id = decoded.user.id
     next()
 
   } catch(err) {
@@ -18,6 +18,12 @@ exports.auth = (req, res, next) => {
 exports.generate = (req, res) => {
   if (!req || !req.user || !req.user.id) return res.sendStatus(401)
 
-  res.header('Auth-User-Token', jwt.sign({ user: req.user.id }, process.env.APP_SECRET))
+  const user = {
+    id: req.user.id,
+    name: req.user.name,
+    email: req.user.email
+  }
+
+  res.header('Auth-User-Token', jwt.sign({ user }, process.env.APP_SECRET))
   res.sendStatus(200)
 }
