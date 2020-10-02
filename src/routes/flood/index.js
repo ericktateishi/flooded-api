@@ -12,4 +12,9 @@ module.exports = (app) => {
     authToken.auth,
     require('./post'),
   )
+
+  app.get(
+    `/flood/:id`,
+    require('./get'),
+  )
 }
