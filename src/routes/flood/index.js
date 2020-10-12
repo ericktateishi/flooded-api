@@ -3,12 +3,12 @@ const authToken = require('../../auth/token')
 module.exports = (app) => {
 
   app.get(
-    `/list`,
+    `/flood`,
     require('./list'),
   )
 
   app.post(
-    `/post`,
+    `/flood`,
     authToken.auth,
     require('./post'),
   )
